@@ -195,6 +195,7 @@ fn duplicate(stack: &mut Stack) {
     }
 }
 
+/// Determines what to do given a StackOp, and applies its effect to the stack
 fn eval(stack: &mut Stack, last_op: StackOp) {
     use StackOp::*;
 
