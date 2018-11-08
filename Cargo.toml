@@ -1,5 +1,5 @@
 [package]
-name = "stack_calc_2"
+name = "stack_calc"
 version = "0.1.0"
 authors = ["Niko Lepka <slench102+git@gmail.com>"]
 

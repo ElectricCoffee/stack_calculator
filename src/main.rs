@@ -234,7 +234,7 @@ fn eval(stack: &mut Stack, last_op: StackOp) {
 }
 
 fn main() -> io::Result<()> {
-    println!("Welcome to the stack calculator 2.0!");
+    println!("Welcome to the stack calculator!");
     println!("Type \"help\" and hit return to view available commands.");
     let mut stack = VecDeque::new();
     loop {
