@@ -138,6 +138,8 @@ fn get_input() -> io::Result<StackOp> {
 
 /// Applies a binary operation if the stack has enough elements.
 /// If not, nothing happens.
+/// NB The top of the stack holds the SECOND operator, not the first
+/// So if we push 2 1 - the operation becomes 2 - 1, not 1 - 2
 fn eval_binop<F>(stack: &mut Stack, fun: F)
 where
     F: FnOnce(f64, f64) -> f64,
@@ -146,7 +148,7 @@ where
         // we know it's safe to unwrap, because the stack has at least 2 numbers
         let a = stack.pop_back().unwrap();
         let b = stack.pop_back().unwrap();
-        stack.push_back(fun(a, b));
+        stack.push_back(fun(b, a));
     }
 }
 
