@@ -28,6 +28,8 @@ enum StackOp {
     Sin, Asin,   // sin and its inverse
     Cos, Acos,   // cos and its inverse
     Tan, Atan,   // tan and its inverse
+    ToDeg, // converts a (radian) number to degrees
+    ToRad, // converts a (degree) number to radians
     // stack operations
     Sum,       // Sums the entire stack
     Prod,      // Multiplies the entire stack
@@ -56,9 +58,11 @@ fn print_help() -> StackOp {
     println!("ln -- Applies the natural log to the last number");
     println!("lg, log2 -- Applies the base-2 log to the last number");
     println!("log, log10 -- Applies the base-10 log to the last number");
-    println!("sin -- Applies the sine of the last number");
-    println!("cos -- Applies the cosine of the last number");
-    println!("tan -- Applies the tangent of the last number");
+    println!("sin -- Applies the sine of the last number (in radians)");
+    println!("cos -- Applies the cosine of the last number (in radians)");
+    println!("tan -- Applies the tangent of the last number (in radians)");
+    println!("to deg -- Converts a number (in radians) to degrees");
+    println!("to rad -- Converts a number (in degrees) to radians");
     println!("sum -- Add the entire stack together");
     println!("prod -- Multiplies the entire stack together");
     println!("pop -- Removes the topmost number");
@@ -92,6 +96,8 @@ fn parse_string(input: &str) -> StackOp {
         "acos" | "cos^-1" => Acos,
         "tan" => Tan,
         "atan" | "tan^-1" => Atan,
+        "deg" | "to deg" => ToDeg,
+        "rad" | "to rad" => ToRad,
         // constants
         "pi" | "π" => Num(consts::PI),
         "e" => Num(consts::E),
@@ -208,18 +214,20 @@ fn eval(stack: &mut Stack, last_op: StackOp) {
         Div => eval_binop(stack, f64::div),
         Pow => eval_binop(stack, f64::powf),
         // unary operators
-        Sqrt => eval_unop(stack, f64::sqrt),
-        Abs  => eval_unop(stack, f64::abs),
-        Neg  => eval_unop(stack, f64::neg),
-        Ln   => eval_unop(stack, f64::ln),
-        Lg   => eval_unop(stack, f64::log2),
-        Log  => eval_unop(stack, f64::log10),
-        Sin  => eval_unop(stack, f64::sin),
-        Asin => eval_unop(stack, f64::asin),
-        Cos  => eval_unop(stack, f64::cos),
-        Acos => eval_unop(stack, f64::acos),
-        Tan  => eval_unop(stack, f64::tan),
-        Atan => eval_unop(stack, f64::atan),
+        Sqrt  => eval_unop(stack, f64::sqrt),
+        Abs   => eval_unop(stack, f64::abs),
+        Neg   => eval_unop(stack, f64::neg),
+        Ln    => eval_unop(stack, f64::ln),
+        Lg    => eval_unop(stack, f64::log2),
+        Log   => eval_unop(stack, f64::log10),
+        Sin   => eval_unop(stack, f64::sin),
+        Asin  => eval_unop(stack, f64::asin),
+        Cos   => eval_unop(stack, f64::cos),
+        Acos  => eval_unop(stack, f64::acos),
+        Tan   => eval_unop(stack, f64::tan),
+        Atan  => eval_unop(stack, f64::atan),
+        ToDeg => eval_unop(stack, f64::to_degrees),
+        ToRad => eval_unop(stack, f64::to_radians),
         // stack operations
         Sum       => eval_stackop(stack, 0.0, |acc, x| acc + x),
         Prod      => eval_stackop(stack, 1.0, |acc, x| acc * x),
