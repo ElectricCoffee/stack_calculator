@@ -1,6 +1,7 @@
 use std::io::{self, BufRead, Write};
 use std::ops::{Add, Sub, Mul, Div, Neg};
 use std::collections::VecDeque;
+use std::f64::consts;
 
 // We need a VecDeque because we need to also push to the back.
 // Using a regular vec would require dissolving the entire stack, 
@@ -9,8 +10,6 @@ use std::collections::VecDeque;
 // A LinkedList could also be used, but the VecDeque has better locality.
 type Stack = VecDeque<f64>;
 
-const PI: f64 = 3.14159265359;
-const E: f64 = 2.71828182846;
 const PHI: f64 = 1.61803398875;
 
 /// Every available operation in the calculator
@@ -94,8 +93,8 @@ fn parse_string(input: &str) -> StackOp {
         "tan" => Tan,
         "atan" | "tan^-1" => Atan,
         // constants
-        "pi" | "π" => Num(PI),
-        "e" => Num(E),
+        "pi" | "π" => Num(consts::PI),
+        "e" => Num(consts::E),
         "phi" | "φ" | "ϕ" => Num(PHI),
         // stack operations
         "sum" => Sum,
